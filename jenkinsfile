@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  environment {
+   ANSIBLE_PRIVATE_KEY=credentials('mariadb-private-key') 
+  }
 
   stages {
     stage('Hello') {
@@ -8,7 +11,7 @@ pipeline {
           ansible --version
           ansible-playbook --version
           ansible-galaxy --version
-          ansible-playbook amazon-ami-2/main.yaml
+          ansible-playbook --private-key=$ANSIBLE_PRIVATE_KEY amazon-ami-2/main.yaml
         '''
       }
     }
